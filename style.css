@@ -1,0 +1,60 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body style */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  color: #222;
+  line-height: 1.5;
+  padding: 20px;
+}
+
+/* Main container */
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Heading */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Week list */
+.week-list {
+  list-style: none;
+  padding: 0;
+}
+
+.week-list li {
+  margin: 10px 0;
+}
+
+.week-list a {
+  display: block;
+  background: #f2f2f2;
+  color: #000;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background 0.2s;
+}
+
+.week-list a:hover {
+  background: #ddd;
+}
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.9em;
+  color: #555;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
