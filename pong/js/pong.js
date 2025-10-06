@@ -46,6 +46,7 @@ function main()
 
     //applies friction
     p1.vy *= fy
+
     //player movement
     p1.move();
 
@@ -62,20 +63,12 @@ function main()
     {
         p2.vy += p2.force
     }
+
     //applies friction
     p2.vy *= fy
+
     //player movement
     p2.move();
-
-    //p2 collision
-    if(p2.y < 0+p2.h/2)
-    {
-        p2.y = 0+p2.h/2
-    }
-    if(p2.y > c.height-p2.h/2)
-    {
-        p2.y = c.height-p2.h/2
-    }
 
     //p1 collision
     if(p1.y < 0+p1.h/2)
@@ -87,11 +80,14 @@ function main()
         p1.y = c.height-p1.h/2
     }
 
-     //p2 with ball collision
-    if(ball.collide(p2))
+    //p2 collision
+    if(p2.y < 0+p2.h/2)
     {
-        ball.x = p2.x - p2.w/2 - ball.w/2
-        ball.vx = -ball.vx
+        p2.y = 0+p2.h/2
+    }
+    if(p2.y > c.height-p2.h/2)
+    {
+        p2.y = c.height-p2.h/2
     }
 
     //ball collision 
@@ -125,6 +121,13 @@ function main()
         ball.vx = -ball.vx;
     }
 
+    //p2 with ball collision
+        if(ball.collide(p2))
+        {
+            ball.x = p2.x - p2.w/2 - ball.w/2
+            ball.vx = -ball.vx
+        }
+        
     //draw the objects
     p1.draw()
     p2.draw()

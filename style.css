@@ -7,8 +7,8 @@
 /* Body style */
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #ffffff;
-  color: #222;
+  background-color: black;
+  color: white;
   line-height: 1.5;
   padding: 20px;
 }
@@ -23,6 +23,7 @@ body {
 h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: white;
 }
 
 /* Week list */
@@ -37,12 +38,11 @@ h1 {
 
 .week-list a {
   display: block;
-  background: #f2f2f2;
-  color: #000;
+  background-color: white;
+  color: black;
   text-decoration: none;
   padding: 10px 15px;
   border-radius: 5px;
-  transition: background 0.2s;
 }
 
 .week-list a:hover {
@@ -53,8 +53,8 @@ h1 {
 .site-footer {
   text-align: center;
   margin-top: 40px;
-  font-size: 0.9em;
-  color: #555;
+  font-size: small;
+  color: grey;
   border-top: 1px solid #ccc;
-  padding-top: 10px;
+  padding-top: 15px;
 }
