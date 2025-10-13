@@ -8,7 +8,7 @@ class Player {
   }
 }
 class Scoreboard {
-  constructor(ctx) {w
+  constructor(ctx) {
     this.ctx = ctx
   }
   draw(p1, p2, c, hs) {
