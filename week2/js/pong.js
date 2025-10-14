@@ -21,7 +21,7 @@ p2.w = 15
 p2.h = 130
 p2.x = c.width - p2.w/2
 
-// ask for names before creating player objects
+// ask for player names 
 let name1 = prompt("Enter Player 1 name:");
 if (name1 === "") 
     {
