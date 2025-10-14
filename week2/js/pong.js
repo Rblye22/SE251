@@ -30,7 +30,7 @@ if (name1 === "")
 let name2 = prompt("Enter Player 2 name:");
 if (name2 === "") 
     {
-  name1 = "Player 1";
+  name2 = "Player 2";
     }
 
 // player array
