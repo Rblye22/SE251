@@ -22,12 +22,24 @@ p2.h = 130
 p2.x = c.width - p2.w/2
 
 // ask for names before creating player objects
-let name1 = prompt("Enter Player 1 name:") || "Player 1"
-let name2 = prompt("Enter Player 2 name:") || "Player 2"
+let name1 = prompt("Enter Player 1 name:");
+if (name1 === "") 
+    {
+  name1 = "Player 1";
+    }
+let name2 = prompt("Enter Player 2 name:");
+if (name2 === "") 
+    {
+  name1 = "Player 1";
+    }
+
+// player array
+let player = [];
 
 // link players to paddles
-let player1 = new Player(name1, p1)
-let player2 = new Player(name2, p2)
+player[0] = new Player(name1, p1);
+player[1] = new Player(name2, p2);
+
 
 // high score
 let highScore = { name: "", score: 0 }
@@ -105,22 +117,21 @@ function main()
     //ball collision 
     if (ball.x < 0) 
     {
-    player2.score++
-        if (player2.score > highScore.score) highScore = { name: player2.name, score: player2.score }
-        ball.x = c.width / 2
-        ball.y = c.height / 2
-        ball.vx = -2
-        ball.vy = -2
-        }
-
+        player[1].score += 1;
+        if (player[1].score > highScore.score) highScore = { name: player[1].name, score: player[1].score };
+        ball.x = c.width / 2;
+        ball.y = c.height / 2;
+        ball.vx = -2;
+        ball.vy = -2;
+    }
     if (ball.x > c.width) 
     {
-    player1.score++
-        if (player1.score > highScore.score) highScore = { name: player1.name, score: player1.score }
-        ball.x = c.width / 2
-        ball.y = c.height / 2
-        ball.vx = 2
-        ball.vy = -2
+        player[0].score += 1;
+        if (player[0].score > highScore.score) highScore = { name: player[0].name, score: player[0].score };
+        ball.x = c.width / 2;
+        ball.y = c.height / 2;
+        ball.vx = 2;
+        ball.vy = -2;
     }
     if(ball.y < 0)
     {
@@ -152,5 +163,5 @@ function main()
     p1.draw()
     p2.draw()
     ball.draw()
-    scoreboard.draw(player1, player2, c, highScore)
+    scoreboard.draw(player[0], player[1], c, highScore);
 }
