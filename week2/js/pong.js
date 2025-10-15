@@ -23,15 +23,13 @@ p2.x = c.width - p2.w/2
 
 // ask for player names 
 let name1 = prompt("Enter Player 1 name:");
-if (name1 === "") 
-    {
+if (name1 === "") {
   name1 = "Player 1";
-    }
+}
 let name2 = prompt("Enter Player 2 name:");
-if (name2 === "") 
-    {
+if (name2 === "") {
   name2 = "Player 2";
-    }
+}
 
 // player array
 let player = [];
@@ -40,6 +38,10 @@ let player = [];
 player[0] = new Player(name1, p1);
 player[1] = new Player(name2, p2);
 
+// ✅ new pad array
+let pad = [];
+pad[0] = player[0].pad;
+pad[1] = player[1].pad;
 
 // high score
 let highScore = { name: "", score: 0 }
@@ -52,71 +54,45 @@ ball.vx = -2
 ball.vy = -2
 ball.color = `orange`
 
-function main()
-{
+function main() {
     //erases the canvas
     ctx.clearRect(0,0,c.width,c.height)
     
-    //p1 accelerates when key is pressed 
-    if(keys[`w`])
-    {
-       p1.vy += -p1.force
+    //pad[0] accelerates when key is pressed 
+    if(keys[`w`]) {
+       pad[0].vy += -pad[0].force
+    }
+    if(keys[`s`]) {
+        pad[0].vy += pad[0].force
     }
 
-    if(keys[`s`])
-    {
-        p1.vy += p1.force
-    }
-
-    //applies friction
-    p1.vy *= fy
-
-    //player movement
-    p1.move();
+    //applies friction and moves
+    pad[0].vy *= fy
+    pad[0].move();
 
     //ball movement
     ball.move()
 
-    //p2 accelerates when key is pressed 
-    if(keys[`ArrowUp`])
-    {
-       p2.vy += -p2.force
+    //pad[1] accelerates when key is pressed 
+    if(keys[`ArrowUp`]) {
+       pad[1].vy += -pad[1].force
+    }
+    if(keys[`ArrowDown`]) {
+        pad[1].vy += pad[1].force
     }
 
-    if(keys[`ArrowDown`])
-    {
-        p2.vy += p2.force
+    //applies friction and moves
+    pad[1].vy *= fy
+    pad[1].move();
+
+    //pad collisions with walls
+    for (let i = 0; i < pad.length; i++) {
+        if (pad[i].y < pad[i].h / 2) pad[i].y = pad[i].h / 2;
+        if (pad[i].y > c.height - pad[i].h / 2) pad[i].y = c.height - pad[i].h / 2;
     }
 
-    //applies friction
-    p2.vy *= fy
-
-    //player movement
-    p2.move();
-
-    //p1 collision
-    if(p1.y < 0+p1.h/2)
-    {
-        p1.y = 0+p1.h/2
-    }
-    if(p1.y > c.height-p1.h/2)
-    {
-        p1.y = c.height-p1.h/2
-    }
-
-    //p2 collision
-    if(p2.y < 0+p2.h/2)
-    {
-        p2.y = 0+p2.h/2
-    }
-    if(p2.y > c.height-p2.h/2)
-    {
-        p2.y = c.height-p2.h/2
-    }
-
-    //ball collision 
-    if (ball.x < 0) 
-    {
+    //ball collision with walls
+    if (ball.x < 0) {
         player[1].score += 1;
         if (player[1].score > highScore.score) highScore = { name: player[1].name, score: player[1].score };
         ball.x = c.width / 2;
@@ -124,8 +100,7 @@ function main()
         ball.vx = -2;
         ball.vy = -2;
     }
-    if (ball.x > c.width) 
-    {
+    if (ball.x > c.width) {
         player[0].score += 1;
         if (player[0].score > highScore.score) highScore = { name: player[0].name, score: player[0].score };
         ball.x = c.width / 2;
@@ -133,35 +108,28 @@ function main()
         ball.vx = 2;
         ball.vy = -2;
     }
-    if(ball.y < 0)
-    {
+    if (ball.y < 0) {
         ball.y = 0
         ball.vy = -ball.vy
     }
-    if(ball.y > c.height)
-    {
+    if (ball.y > c.height) {
         ball.y = c.height
         ball.vy = -ball.vy
-       
     }
 
-    //p1 with ball collision
-    if(ball.collide(p1))
-    {
-        ball.x = p1.x + p1.w/2 + ball.w/2
+    //pad collisions with ball
+    if (ball.collide(pad[0])) {
+        ball.x = pad[0].x + pad[0].w/2 + ball.w/2
         ball.vx = -ball.vx;
     }
-
-    //p2 with ball collision
-        if(ball.collide(p2))
-        {
-            ball.x = p2.x - p2.w/2 - ball.w/2
-            ball.vx = -ball.vx
-        }
+    if (ball.collide(pad[1])) {
+        ball.x = pad[1].x - pad[1].w/2 - ball.w/2
+        ball.vx = -ball.vx
+    }
         
-    //draw the objects
-    p1.draw()
-    p2.draw()
+    //draw objects
+    pad[0].draw()
+    pad[1].draw()
     ball.draw()
     scoreboard.draw(player[0], player[1], c, highScore);
 }
