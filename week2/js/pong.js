@@ -50,9 +50,6 @@ var controls = []
 controls[0] = {up:`w`, down:`s`}
 controls[1] = {up:`ArrowUp`, down:`ArrowDown`}
 
-//high score
-let highScore = { name: "", score: 0 }
-
 //ball setup
 var ball = new Box();
 ball.w = 20
@@ -93,21 +90,19 @@ function main()
     ball.move()
 
     //ball collision with walls
-    if (ball.x < 0)
+    if (ball.x < 0) 
     {
-        player[1].score += 1;
-        console.log(`${player[0].score} | ${player[1].score}`);
-        if (player[1].score > highScore.score) highScore = { name: player[1].name, score: player[1].score };
-        ball.x = c.width / 2;
-        ball.y = c.height / 2;
-        ball.vx = -2;
-        ball.vy = -2;
+    player[1].score += 1;
+    console.log(`${player[0].score} | ${player[1].score}`);
+    ball.x = c.width / 2;
+    ball.y = c.height / 2;
+    ball.vx = -2;
+    ball.vy = -2;
     }
-    if (ball.x > c.width)
+    if (ball.x > c.width) 
     {
         player[0].score += 1;
         console.log(`${player[0].score} | ${player[1].score}`);
-        if (player[0].score > highScore.score) highScore = { name: player[0].name, score: player[0].score };
         ball.x = c.width / 2;
         ball.y = c.height / 2;
         ball.vx = 2;
