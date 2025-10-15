@@ -1,5 +1,18 @@
 @charset "UTF-8";
 
+body {
+    text-align: center;
+    background: white;
+}
+
+#score{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    font: 24px Arial, sans-serif;
+    margin-bottom:10px;
+}
+
 canvas{
     border:1px solid black;
 }
