@@ -18,6 +18,22 @@ heading.addEventListener('click', function () {
         . Change the pad's fill property  to the player's fill property
         . Show the fill's hex code in the output div 
 -----------*/
+var fillInputs = document.querySelectorAll('.fill')
+var outputs = document.querySelectorAll('.fill + .output')
+
+for (var i = 0; i < fillInputs.length; i++) {
+  fillInputs[i].value = player[i].fill
+  outputs[i].innerHTML = player[i].fill
+
+  fillInputs[i].addEventListener('input', function (e) {
+    var index = Array.prototype.indexOf.call(fillInputs, e.target)
+    var color = e.target.value
+
+    player[index].fill = color
+    pad[index].fill = color
+    outputs[index].innerHTML = color
+  })
+}
 
 /*---------
     Program the six key inputs to do the following:
