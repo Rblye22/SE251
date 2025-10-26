@@ -4,13 +4,11 @@
     . show or hide the `.sides` div
 ---------*/
 var heading = document.querySelector('#options h2')
-var sides = document.getElementById('sides') || document.querySelector('#options .sides')
+var sides = document.querySelector('#options .sides')
 
-if (heading && sides) {
-  heading.addEventListener('click', function () {
+heading.addEventListener('click', function(){
     sides.classList.toggle('hidden')
-  })
-}
+})
 /*---------
     Program the two fill inputs to do the following:
     . Display the correct colors on the inputs and outputs and paddles    
@@ -19,151 +17,91 @@ if (heading && sides) {
         . Change the pad's fill property  to the player's fill property
         . Show the fill's hex code in the output div 
 -----------*/
-var fillInputs = document.querySelectorAll('.fill')
-var outputs = document.querySelectorAll('.fill + .output')
+var panels = document.querySelectorAll('#options .op')
 
-for (var i = 0; i < fillInputs.length; i++) {
-  fillInputs[i].value = player[i].fill
-  outputs[i].innerHTML = player[i].fill
-  fillInputs[i].addEventListener('input', function () {
-    var color = this.value
-    if (this === fillInputs[0]) {
-      player[0].fill = color
-      pad[0].fill = color
-      outputs[0].innerHTML = color
-    } else if (this === fillInputs[1]) {
-      player[1].fill = color
-      pad[1].fill = color
-      outputs[1].innerHTML = color
+for (var i = 0; i < 2; i++) {
+    var p = panels[i]
+    var colorInputs = p.querySelectorAll('.color')
+
+    for (var j = 0; j < colorInputs.length; j++) {
+        var input = colorInputs[j]
+        var output = input.nextElementSibling
+        input.pi = i
+        if (input.classList.contains('fill')) {
+            input.value = player[i].fill
+            output.innerHTML = player[i].fill
+            input.addEventListener('input', function(){
+                var n = this.pi
+                player[n].fill = this.value
+                pad[n].fill = this.value
+                this.nextElementSibling.innerHTML = this.value
+            })
+        }
+        if (input.classList.contains('stroke')) {
+            input.value = player[i].stroke
+            output.innerHTML = player[i].stroke
+            input.addEventListener('input', function(){
+                var n = this.pi
+                player[n].stroke = this.value
+                pad[n].stroke = this.value
+                this.nextElementSibling.innerHTML = this.value
+            })
+        }
     }
-  })
-}
-
-/*---------
-    Program the six key inputs to do the following:
-    . Display the correct key names for each player   
-    . using a `keydown` event
-        .Display the correct key name in the input
-        .Change the player's key to the value of the input
-        .Show the player's key in the output div 
------------*/
-var upInputs = document.querySelectorAll('.u')
-var upOutputs = document.querySelectorAll('.u + .output')
-
-for (var i = 0; i < upInputs.length; i++) {
-  upInputs[i].value = player[i].keys.u
-  upOutputs[i].innerHTML = player[i].keys.u
-
-  upInputs[i].addEventListener('focus', function () {
-    currentState = 'pause'
-  })
-  upInputs[i].addEventListener('keydown', function (e) {
-    e.preventDefault()
-    var keyName = e.key
-    if (this === upInputs[0]) {
-      upInputs[0].value = keyName
-      player[0].keys.u = keyName
-      upOutputs[0].innerHTML = keyName
-    } else if (this === upInputs[1]) {
-      upInputs[1].value = keyName
-      player[1].keys.u = keyName
-      upOutputs[1].innerHTML = keyName
+    var keyInputs = p.querySelectorAll('.key')
+    for (var k = 0; k < keyInputs.length; k++) {
+        var input2 = keyInputs[k]
+        var output2 = input2.nextElementSibling
+        input2.pi = i
+        if (input2.classList.contains('u')) {
+            input2.which = 'u'
+            input2.value = player[i].keys.u
+            output2.innerHTML = player[i].keys.u
+        }
+        if (input2.classList.contains('d')) {
+            input2.which = 'd'
+            input2.value = player[i].keys.d
+            output2.innerHTML = player[i].keys.d
+        }
+        if (input2.classList.contains('s')) {
+            input2.which = 's'
+            input2.value = player[i].keys.s
+            output2.innerHTML = player[i].keys.s
+        }
+        input2.addEventListener('focus', function(){
+            currentState = 'pause'
+        })
+        input2.addEventListener('keydown', function(e){
+            var n = this.pi
+            var keyType = this.which
+            player[n].keys[keyType] = e.key
+            this.value = e.key
+            this.nextElementSibling.innerHTML = e.key
+        })
     }
-  })
-}
-// stroke inputs
-var strokeInputs = document.querySelectorAll('.stroke')
-var strokeOutputs = document.querySelectorAll('.stroke + .output')
-
-for (var i = 0; i < strokeInputs.length; i++) {
-  strokeInputs[i].value = player[i].stroke
-  strokeOutputs[i].innerHTML = player[i].stroke
-  strokeInputs[i].addEventListener('input', function () {
-    var color = this.value
-    if (this === strokeInputs[0]) {
-      player[0].stroke = color
-      pad[0].stroke = color
-      strokeOutputs[0].innerHTML = color
-    } else if (this === strokeInputs[1]) {
-      player[1].stroke = color
-      pad[1].stroke = color
-      strokeOutputs[1].innerHTML = color
-    }
-  })
-}
-// down inputs
-var downInputs = document.querySelectorAll('.d')
-var downOutputs = document.querySelectorAll('.d + .output')
-
-for (var i = 0; i < downInputs.length; i++) {
-  downInputs[i].value = player[i].keys.d
-  downOutputs[i].innerHTML = player[i].keys.d
-
-  downInputs[i].addEventListener('focus', function () {
-    currentState = 'pause'
-  })
-  downInputs[i].addEventListener('keydown', function (e) {
-    e.preventDefault()
-    var keyName = e.key
-    if (this === downInputs[0]) {
-      player[0].keys.d = keyName
-      downInputs[0].value = keyName
-      downOutputs[0].innerHTML = keyName
-    } else if (this === downInputs[1]) {
-      player[1].keys.d = keyName
-      downInputs[1].value = keyName
-      downOutputs[1].innerHTML = keyName
-    }
-  })
-}
-// straight inputs
-var straightInputs = document.querySelectorAll('.s')
-var straightOutputs = document.querySelectorAll('.s + .output')
-
-for (var i = 0; i < straightInputs.length; i++) {
-  straightInputs[i].value = player[i].keys.s
-  straightOutputs[i].innerHTML = player[i].keys.s
-
-  straightInputs[i].addEventListener('focus', function () {
-    currentState = 'pause'
-  })
-  straightInputs[i].addEventListener('keydown', function (e) {
-    e.preventDefault()
-    var keyName = e.key
-    if (this === straightInputs[0]) {
-      player[0].keys.s = keyName
-      straightInputs[0].value = keyName
-      straightOutputs[0].innerHTML = keyName
-    } else if (this === straightInputs[1]) {
-      player[1].keys.s = keyName
-      straightInputs[1].value = keyName
-      straightOutputs[1].innerHTML = keyName
-    }
-  })
-}
-// theme select
+  }
+    // Theme select
 var themeInput = document.querySelector('.theme')
 var themeOutput = document.querySelector('.theme + .output')
-
 if (themeInput) {
-  if (themeInput.value === 'light') {
-    document.body.style.backgroundColor = 'white'
-    document.querySelector('main').style.color = 'black'
-    themeOutput.innerHTML = 'Light Mode'
-  } else {
-    document.body.style.backgroundColor = 'black'
-    document.querySelector('main').style.color = 'white'
-    themeOutput.innerHTML = 'Dark Mode'
-  }
-  themeInput.addEventListener('change', function () {
-    if (this.value === 'light') {
-      document.body.style.backgroundColor = 'grey'
-      document.querySelector('main').style.color = 'black'
-      themeOutput.innerHTML = 'Light Mode'
+    if (themeInput.value === 'light') {
+        document.body.style.backgroundColor = 'grey'
+        document.querySelector('main').style.color = 'black'
+        themeOutput.innerHTML = 'Light Mode'
     } else {
-      document.body.style.backgroundColor = 'black'
-      document.querySelector('main').style.color = 'white'
-      themeOutput.innerHTML = 'Dark Mode'
+        document.body.style.backgroundColor = 'black'
+        document.querySelector('main').style.color = 'white'
+        themeOutput.innerHTML = 'Dark Mode'
     }
-  })
+    themeInput.addEventListener('change', function(){
+        if (this.value === 'light') {
+            document.body.style.backgroundColor = 'grey'
+            document.querySelector('main').style.color = 'black'
+            themeOutput.innerHTML = 'Light Mode'
+        } else {
+            document.body.style.backgroundColor = 'black'
+            document.querySelector('main').style.color = 'white'
+            themeOutput.innerHTML = 'Dark Mode'
+        }
+    })
 }
