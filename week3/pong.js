@@ -72,14 +72,12 @@ states[`game`] = function()
     //ball movement
     ball.move();
 
-    if(ball.y < sides.top + ball.h/2)
-    {
-        ball.y = sides.top + ball.h/2;
-        ball.vy = -ball.vy;
+    if (ball.y < ball.h/2) {
+    ball.y = ball.h/2;
+    ball.vy = -ball.vy;
     }
-    if(ball.y > sides.bottom - ball.h/2)
-    {
-        ball.y = sides.bottom - ball.h/2;
+    if (ball.y > c.height - ball.h/2) {
+        ball.y = c.height - ball.h/2;
         ball.vy = -ball.vy;
     }
 
