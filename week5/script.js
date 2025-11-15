@@ -37,7 +37,7 @@ $(`button`)[0].addEventListener(`click`, e=>{
     post.appendChild(p)
     $(`#output`).appendChild(post)
 
-    var arr = Array.from(document.querySelectorAll(`.post`)).map(value=>value.outerHTML)
+    var arr = Array.from($(`.post`)).map(value=>value.outerHTML)
     
     localStorage.setItem(`posts`,JSON.stringify(arr))
 })
@@ -74,7 +74,7 @@ allBtn.addEventListener(`click`, e=>{
 });
 
 confirmBtn.addEventListener(`click`, e=>{
-    var posts = Array.from(document.querySelectorAll(`.post`));
+    var posts = Array.from($(`.post`));
 
     posts.forEach(p=>{
         var c = p.querySelector(`input[type="checkbox"]`);
