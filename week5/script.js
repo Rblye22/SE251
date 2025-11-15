@@ -42,8 +42,65 @@ $(`button`)[0].addEventListener(`click`, e=>{
     localStorage.setItem(`posts`,JSON.stringify(arr))
 })
 
+var bulk = $(`button`)[1];
+var allBtn = $(`#all`);
+var confirmBtn = $(`#confirm`);
+var mode = false;
 
+bulk.addEventListener(`click`, e=>{
+    mode = !mode;
 
+    var checks = document.querySelectorAll(`.post input[type="checkbox"]`);
+    checks.forEach(c=>{
+        if(mode) c.classList.remove(`hidden`);
+        else{
+            c.classList.add(`hidden`);
+            c.checked = false;
+        }
+    });
+
+    if(mode){
+        allBtn.classList.remove(`hidden`);
+        confirmBtn.classList.remove(`hidden`);
+    }else{
+        allBtn.classList.add(`hidden`);
+        confirmBtn.classList.add(`hidden`);
+    }
+});
+
+allBtn.addEventListener(`click`, e=>{
+    var checks = document.querySelectorAll(`.post input[type="checkbox"]`);
+    checks.forEach(c=>c.checked = true);
+});
+
+confirmBtn.addEventListener(`click`, e=>{
+    var posts = Array.from($(`.post`));
+
+    posts.forEach(p=>{
+        var c = p.querySelector(`input[type="checkbox"]`);
+        if(c && c.checked) p.remove();
+    });
+
+    var remaining = posts
+        .filter(p=>{
+            var c = p.querySelector(`input[type="checkbox"]`);
+            return !(c && c.checked);
+        })
+        .map(p=>p.outerHTML);
+
+    localStorage.setItem(`posts`, JSON.stringify(remaining));
+
+    mode = false;
+
+    var checks = document.querySelectorAll(`.post input[type="checkbox"]`);
+    checks.forEach(c=>{
+        c.classList.add(`hidden`);
+        c.checked = false;
+    });
+
+    allBtn.classList.add(`hidden`);
+    confirmBtn.classList.add(`hidden`);
+});
 
 /*
 Function to select an element. 
@@ -58,13 +115,3 @@ function $(_element)
     let e = document.querySelectorAll(_element)
     return (e.length > 1)?e:e[0]
 }
-
-
-
-
-
-
-
-
-
-
